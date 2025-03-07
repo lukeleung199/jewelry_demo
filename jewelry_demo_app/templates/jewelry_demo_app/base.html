@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jewelry Demo - {% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Jewelry Demo</div>
+        <ul class="nav-links">
+            <li><a href="{% url 'home' %}">首頁</a></li>
+            <li><a href="{% url 'product_list' %}">產品</a></li>
+            <li><a href="{% url 'contact' %}">聯絡我們</a></li>
+            <li><a href="{% url 'login' %}">登入</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+    <footer>
+        <p>© 2025 Jewelry Demo. 版權所有。</p>
+    </footer>
+</body>
+</html>

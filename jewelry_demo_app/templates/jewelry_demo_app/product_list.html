@@ -1,0 +1,25 @@
+{% extends 'jewelry_demo_app/base.html' %}
+{% block title %}產品{% endblock %}
+{% block content %}
+<h1>我們的產品</h1>
+<div class="categories">
+    <a href="#">戒指</a>
+    <a href="#">項鍊</a>
+    <a href="#">耳環</a>
+</div>
+<div class="product-list">
+    {% for product in products %}
+    <div class="product-item">
+        <img src="{{ product.image_url }}" alt="{{ product.name }}">
+        <h3>{{ product.name }}</h3>
+        <p>HK${{ product.price }}</p>
+        <a href="#">查看詳情</a>
+    </div>
+    {% endfor %}
+</div>
+<div class="pagination">
+    <a href="#" class="active">1</a>
+    <a href="#">2</a>
+    <a href="#">3</a>
+</div>
+{% endblock %}

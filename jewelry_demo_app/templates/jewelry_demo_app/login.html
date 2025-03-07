@@ -1,0 +1,16 @@
+{% extends 'jewelry_demo_app/base.html' %}
+{% block title %}登入{% endblock %}
+{% block content %}
+<div class="form-container">
+    <h1>登入</h1>
+    <p>請輸入您的登入資訊：</p>
+    <form>
+        <label for="username">用戶名：</label><br>
+        <input type="text" id="username" name="username"><br>
+        <label for="password">密碼：</label><br>
+        <input type="password" id="password" name="password"><br>
+        <button type="submit">登入</button>
+    </form>
+    <p>還沒有帳號？<a href="#">註冊</a></p>
+</div>
+{% endblock %}
