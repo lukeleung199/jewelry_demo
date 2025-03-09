@@ -1,3 +1,9 @@
+from django.contrib.auth.views import LoginView
+
+urlpatterns = [
+    path('login/', LoginView.as_view(template_name='jewelry_demo_app/login.html'), name='login'),
+]
+
 {% extends 'jewelry_demo_app/base.html' %}
 {% block title %}登入{% endblock %}
 {% block content %}

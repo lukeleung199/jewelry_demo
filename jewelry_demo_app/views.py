@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .models import Product
 
 # 假數據
 PRODUCTS = [
@@ -18,3 +19,7 @@ def contact(request):
 
 def login_view(request):
     return render(request, 'jewelry_demo_app/login.html')
+
+def product_list(request):
+    products = Product.objects.all()
+    return render(request, 'jewelry_demo_app/product_list.html', {'products': products})

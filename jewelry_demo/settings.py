@@ -76,8 +76,15 @@ WSGI_APPLICATION = 'jewelry_demo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',  # 使用 MySQL 引擎
+        'NAME': 'website_ldb',            # 資料庫名稱（稍後會創建）
+        'USER': 'pubuser',            # 你的 MySQL 使用者名稱
+        'PASSWORD': 'pcpubuser',    # 你的 MySQL 密碼
+        'HOST': 'localhost',                  # MySQL 伺服器地址，通常是 localhost
+        'PORT': '3306',                       # MySQL 預設端口
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",  # 確保相容性
+        },
     }
 }
 
