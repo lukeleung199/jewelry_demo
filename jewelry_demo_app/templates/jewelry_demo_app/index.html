@@ -1,0 +1,13 @@
+{% extends 'jewelry_demo_app/base.html' %}
+{% block title %}首頁{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>歡迎來到 Jewelry Demo</h1>
+    <p>這裡是您的珠寶展示平台！</p>
+    <div class="categories">
+        <a href="{% url 'backend:product_list' %}" class="btn btn-primary">戒指</a>
+        <a href="{% url 'backend:product_list' %}" class="btn btn-primary">項鍊</a>
+        <a href="{% url 'backend:product_list' %}" class="btn btn-primary">耳環</a>
+    </div>
+</div>
+{% endblock %}

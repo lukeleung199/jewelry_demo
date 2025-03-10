@@ -93,97 +93,8 @@ CREATE TABLE `auth_permission` (
 
 LOCK TABLES `auth_permission` WRITE;
 /*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
-INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2,'Can change log entry',1,'change_logentry'),(3,'Can delete log entry',1,'delete_logentry'),(4,'Can view log entry',1,'view_logentry'),(5,'Can add permission',2,'add_permission'),(6,'Can change permission',2,'change_permission'),(7,'Can delete permission',2,'delete_permission'),(8,'Can view permission',2,'view_permission'),(9,'Can add group',3,'add_group'),(10,'Can change group',3,'change_group'),(11,'Can delete group',3,'delete_group'),(12,'Can view group',3,'view_group'),(13,'Can add user',4,'add_user'),(14,'Can change user',4,'change_user'),(15,'Can delete user',4,'delete_user'),(16,'Can view user',4,'view_user'),(17,'Can add content type',5,'add_contenttype'),(18,'Can change content type',5,'change_contenttype'),(19,'Can delete content type',5,'delete_contenttype'),(20,'Can view content type',5,'view_contenttype'),(21,'Can add session',6,'add_session'),(22,'Can change session',6,'change_session'),(23,'Can delete session',6,'delete_session'),(24,'Can view session',6,'view_session'),(25,'Can add product',7,'add_product'),(26,'Can change product',7,'change_product'),(27,'Can delete product',7,'delete_product'),(28,'Can view product',7,'view_product'),(29,'Can add category',8,'add_category'),(30,'Can change category',8,'change_category'),(31,'Can delete category',8,'delete_category'),(32,'Can view category',8,'view_category'),(33,'Can add customer',9,'add_customer'),(34,'Can change customer',9,'change_customer'),(35,'Can delete customer',9,'delete_customer'),(36,'Can view customer',9,'view_customer'),(37,'Can add order',10,'add_order'),(38,'Can change order',10,'change_order'),(39,'Can delete order',10,'delete_order'),(40,'Can view order',10,'view_order');
+INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2,'Can change log entry',1,'change_logentry'),(3,'Can delete log entry',1,'delete_logentry'),(4,'Can view log entry',1,'view_logentry'),(5,'Can add permission',2,'add_permission'),(6,'Can change permission',2,'change_permission'),(7,'Can delete permission',2,'delete_permission'),(8,'Can view permission',2,'view_permission'),(9,'Can add group',3,'add_group'),(10,'Can change group',3,'change_group'),(11,'Can delete group',3,'delete_group'),(12,'Can view group',3,'view_group'),(13,'Can add content type',4,'add_contenttype'),(14,'Can change content type',4,'change_contenttype'),(15,'Can delete content type',4,'delete_contenttype'),(16,'Can view content type',4,'view_contenttype'),(17,'Can add session',5,'add_session'),(18,'Can change session',5,'change_session'),(19,'Can delete session',5,'delete_session'),(20,'Can view session',5,'view_session'),(21,'Can add category',6,'add_category'),(22,'Can change category',6,'change_category'),(23,'Can delete category',6,'delete_category'),(24,'Can view category',6,'view_category'),(25,'Can add customer',7,'add_customer'),(26,'Can change customer',7,'change_customer'),(27,'Can delete customer',7,'delete_customer'),(28,'Can view customer',7,'view_customer'),(29,'Can add user',8,'add_customuser'),(30,'Can change user',8,'change_customuser'),(31,'Can delete user',8,'delete_customuser'),(32,'Can view user',8,'view_customuser'),(33,'Can add product',9,'add_product'),(34,'Can change product',9,'change_product'),(35,'Can delete product',9,'delete_product'),(36,'Can view product',9,'view_product'),(37,'Can add order',10,'add_order'),(38,'Can change order',10,'change_order'),(39,'Can delete order',10,'delete_order'),(40,'Can view order',10,'view_order');
 /*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `auth_user`
---
-
-DROP TABLE IF EXISTS `auth_user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `auth_user` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `password` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_login` datetime(6) DEFAULT NULL,
-  `is_superuser` tinyint(1) NOT NULL,
-  `username` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `first_name` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_name` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(254) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `is_staff` tinyint(1) NOT NULL,
-  `is_active` tinyint(1) NOT NULL,
-  `date_joined` datetime(6) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `auth_user`
---
-
-LOCK TABLES `auth_user` WRITE;
-/*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
-/*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `auth_user_groups`
---
-
-DROP TABLE IF EXISTS `auth_user_groups`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `auth_user_groups` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `group_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `auth_user_groups_user_id_group_id_94350c0c_uniq` (`user_id`,`group_id`),
-  KEY `auth_user_groups_group_id_97559544_fk_auth_group_id` (`group_id`),
-  CONSTRAINT `auth_user_groups_group_id_97559544_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
-  CONSTRAINT `auth_user_groups_user_id_6a12ed8b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `auth_user_groups`
---
-
-LOCK TABLES `auth_user_groups` WRITE;
-/*!40000 ALTER TABLE `auth_user_groups` DISABLE KEYS */;
-/*!40000 ALTER TABLE `auth_user_groups` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `auth_user_user_permissions`
---
-
-DROP TABLE IF EXISTS `auth_user_user_permissions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `auth_user_user_permissions` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `user_id` int NOT NULL,
-  `permission_id` int NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `auth_user_user_permissions_user_id_permission_id_14a6b632_uniq` (`user_id`,`permission_id`),
-  KEY `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` (`permission_id`),
-  CONSTRAINT `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
-  CONSTRAINT `auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `auth_user_user_permissions`
---
-
-LOCK TABLES `auth_user_user_permissions` WRITE;
-/*!40000 ALTER TABLE `auth_user_user_permissions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `auth_user_user_permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -201,12 +112,12 @@ CREATE TABLE `django_admin_log` (
   `action_flag` smallint unsigned NOT NULL,
   `change_message` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `content_type_id` int DEFAULT NULL,
-  `user_id` int NOT NULL,
+  `user_id` bigint NOT NULL,
   PRIMARY KEY (`id`),
   KEY `django_admin_log_content_type_id_c4bce8eb_fk_django_co` (`content_type_id`),
-  KEY `django_admin_log_user_id_c564eba6_fk_auth_user_id` (`user_id`),
+  KEY `django_admin_log_user_id_c564eba6_fk_jewelry_d` (`user_id`),
   CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
-  CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
+  CONSTRAINT `django_admin_log_user_id_c564eba6_fk_jewelry_d` FOREIGN KEY (`user_id`) REFERENCES `jewelry_demo_app_customuser` (`id`),
   CONSTRAINT `django_admin_log_chk_1` CHECK ((`action_flag` >= 0))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -242,7 +153,7 @@ CREATE TABLE `django_content_type` (
 
 LOCK TABLES `django_content_type` WRITE;
 /*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
-INSERT INTO `django_content_type` VALUES (1,'admin','logentry'),(3,'auth','group'),(2,'auth','permission'),(4,'auth','user'),(5,'contenttypes','contenttype'),(8,'jewelry_demo_app','category'),(9,'jewelry_demo_app','customer'),(10,'jewelry_demo_app','order'),(7,'jewelry_demo_app','product'),(6,'sessions','session');
+INSERT INTO `django_content_type` VALUES (1,'admin','logentry'),(3,'auth','group'),(2,'auth','permission'),(4,'contenttypes','contenttype'),(6,'jewelry_demo_app','category'),(7,'jewelry_demo_app','customer'),(8,'jewelry_demo_app','customuser'),(10,'jewelry_demo_app','order'),(9,'jewelry_demo_app','product'),(5,'sessions','session');
 /*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -259,7 +170,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,7 +179,7 @@ CREATE TABLE `django_migrations` (
 
 LOCK TABLES `django_migrations` WRITE;
 /*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
-INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2025-03-09 13:24:17.168056'),(2,'auth','0001_initial','2025-03-09 13:24:17.665131'),(3,'admin','0001_initial','2025-03-09 13:24:17.773160'),(4,'admin','0002_logentry_remove_auto_add','2025-03-09 13:24:17.778762'),(5,'admin','0003_logentry_add_action_flag_choices','2025-03-09 13:24:17.784249'),(6,'contenttypes','0002_remove_content_type_name','2025-03-09 13:24:17.870533'),(7,'auth','0002_alter_permission_name_max_length','2025-03-09 13:24:17.925676'),(8,'auth','0003_alter_user_email_max_length','2025-03-09 13:24:17.943489'),(9,'auth','0004_alter_user_username_opts','2025-03-09 13:24:17.949436'),(10,'auth','0005_alter_user_last_login_null','2025-03-09 13:24:17.997584'),(11,'auth','0006_require_contenttypes_0002','2025-03-09 13:24:18.000154'),(12,'auth','0007_alter_validators_add_error_messages','2025-03-09 13:24:18.005621'),(13,'auth','0008_alter_user_username_max_length','2025-03-09 13:24:18.061732'),(14,'auth','0009_alter_user_last_name_max_length','2025-03-09 13:24:18.114950'),(15,'auth','0010_alter_group_name_max_length','2025-03-09 13:24:18.131697'),(16,'auth','0011_update_proxy_permissions','2025-03-09 13:24:18.137596'),(17,'auth','0012_alter_user_first_name_max_length','2025-03-09 13:24:18.184474'),(18,'sessions','0001_initial','2025-03-09 13:24:18.210933'),(19,'jewelry_demo_app','0001_initial','2025-03-09 13:25:38.601167'),(20,'jewelry_demo_app','0002_category_customer_order','2025-03-09 13:40:11.168551');
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2025-03-10 09:02:03.955512'),(2,'contenttypes','0002_remove_content_type_name','2025-03-10 09:02:04.039543'),(3,'auth','0001_initial','2025-03-10 09:02:04.266138'),(4,'auth','0002_alter_permission_name_max_length','2025-03-10 09:02:04.309856'),(5,'auth','0003_alter_user_email_max_length','2025-03-10 09:02:04.309856'),(6,'auth','0004_alter_user_username_opts','2025-03-10 09:02:04.325068'),(7,'auth','0005_alter_user_last_login_null','2025-03-10 09:02:04.329730'),(8,'auth','0006_require_contenttypes_0002','2025-03-10 09:02:04.329730'),(9,'auth','0007_alter_validators_add_error_messages','2025-03-10 09:02:04.340378'),(10,'auth','0008_alter_user_username_max_length','2025-03-10 09:02:04.356360'),(11,'auth','0009_alter_user_last_name_max_length','2025-03-10 09:02:04.360142'),(12,'auth','0010_alter_group_name_max_length','2025-03-10 09:02:04.375021'),(13,'auth','0011_update_proxy_permissions','2025-03-10 09:02:04.376685'),(14,'auth','0012_alter_user_first_name_max_length','2025-03-10 09:02:04.385606'),(15,'jewelry_demo_app','0001_initial','2025-03-10 09:02:04.889108'),(16,'admin','0001_initial','2025-03-10 09:02:05.011676'),(17,'admin','0002_logentry_remove_auto_add','2025-03-10 09:02:05.017679'),(18,'admin','0003_logentry_add_action_flag_choices','2025-03-10 09:02:05.028217'),(19,'sessions','0001_initial','2025-03-10 09:02:05.067758');
 /*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -294,6 +205,7 @@ CREATE TABLE `django_session` (
 
 LOCK TABLES `django_session` WRITE;
 /*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
+INSERT INTO `django_session` VALUES ('8lvshdmkr5a3ynez4r93i3swl02s1z0r','.eJxVjDsOwjAQBe_iGllZeze2Kek5g7X-4QBypDipEHeHSCmgfTPzXsLztla_9bz4KYmzAHH63QLHR247SHdut1nGua3LFOSuyIN2eZ1Tfl4O9--gcq_fWkebM2EJhqMdk1NkdeCiSGunCiRMjGQosuYhAtCo0aGx6EApGNiI9wfl6TcO:1trZFV:OxZ9ELXEi7qdmvLmbAJbMAxGz6pQdiFimVccGJhlF1M','2025-03-24 09:16:37.100547'),('r5u9fplbfis9jtgu7kxb4fprutciv142','.eJxVjDsOwjAQBe_iGllZeze2Kek5g7X-4QBypDipEHeHSCmgfTPzXsLztla_9bz4KYmzAHH63QLHR247SHdut1nGua3LFOSuyIN2eZ1Tfl4O9--gcq_fWkebM2EJhqMdk1NkdeCiSGunCiRMjGQosuYhAtCo0aGx6EApGNiI9wfl6TcO:1trZ4B:5eilsrUQ1y24G1hkZi0uJTd3IRB9o8uewgAkZkTUpPE','2025-03-24 09:04:55.294508');
 /*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -330,10 +242,13 @@ DROP TABLE IF EXISTS `jewelry_demo_app_customer`;
 CREATE TABLE `jewelry_demo_app_customer` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `email` varchar(254) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `uid` varchar(8) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
   `shipping_address` longtext COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`)
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `uid` (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -347,6 +262,99 @@ LOCK TABLES `jewelry_demo_app_customer` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `jewelry_demo_app_customuser`
+--
+
+DROP TABLE IF EXISTS `jewelry_demo_app_customuser`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `jewelry_demo_app_customuser` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `password` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_login` datetime(6) DEFAULT NULL,
+  `is_superuser` tinyint(1) NOT NULL,
+  `username` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `first_name` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(254) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_staff` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `date_joined` datetime(6) NOT NULL,
+  `level` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(15) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` longtext COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `jewelry_demo_app_customuser`
+--
+
+LOCK TABLES `jewelry_demo_app_customuser` WRITE;
+/*!40000 ALTER TABLE `jewelry_demo_app_customuser` DISABLE KEYS */;
+INSERT INTO `jewelry_demo_app_customuser` VALUES (1,'pbkdf2_sha256$870000$q60QCvpdBuYfsoB3HjxQqc$ZJ3438keODztOf4aCLkBYanVs5TjKGOfCj1DJloBZ8g=','2025-03-10 09:16:37.097559',1,'sakamata199','','','',1,1,'2025-03-10 09:02:27.163018','staff',NULL,NULL);
+/*!40000 ALTER TABLE `jewelry_demo_app_customuser` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `jewelry_demo_app_customuser_groups`
+--
+
+DROP TABLE IF EXISTS `jewelry_demo_app_customuser_groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `jewelry_demo_app_customuser_groups` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `customuser_id` bigint NOT NULL,
+  `group_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `jewelry_demo_app_customu_customuser_id_group_id_c65ae907_uniq` (`customuser_id`,`group_id`),
+  KEY `jewelry_demo_app_cus_group_id_29f86292_fk_auth_grou` (`group_id`),
+  CONSTRAINT `jewelry_demo_app_cus_customuser_id_d17edb65_fk_jewelry_d` FOREIGN KEY (`customuser_id`) REFERENCES `jewelry_demo_app_customuser` (`id`),
+  CONSTRAINT `jewelry_demo_app_cus_group_id_29f86292_fk_auth_grou` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `jewelry_demo_app_customuser_groups`
+--
+
+LOCK TABLES `jewelry_demo_app_customuser_groups` WRITE;
+/*!40000 ALTER TABLE `jewelry_demo_app_customuser_groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `jewelry_demo_app_customuser_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `jewelry_demo_app_customuser_user_permissions`
+--
+
+DROP TABLE IF EXISTS `jewelry_demo_app_customuser_user_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `jewelry_demo_app_customuser_user_permissions` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `customuser_id` bigint NOT NULL,
+  `permission_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `jewelry_demo_app_customu_customuser_id_permission_34ea7e7c_uniq` (`customuser_id`,`permission_id`),
+  KEY `jewelry_demo_app_cus_permission_id_2cafb4ae_fk_auth_perm` (`permission_id`),
+  CONSTRAINT `jewelry_demo_app_cus_customuser_id_2c02d4e8_fk_jewelry_d` FOREIGN KEY (`customuser_id`) REFERENCES `jewelry_demo_app_customuser` (`id`),
+  CONSTRAINT `jewelry_demo_app_cus_permission_id_2cafb4ae_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `jewelry_demo_app_customuser_user_permissions`
+--
+
+LOCK TABLES `jewelry_demo_app_customuser_user_permissions` WRITE;
+/*!40000 ALTER TABLE `jewelry_demo_app_customuser_user_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `jewelry_demo_app_customuser_user_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `jewelry_demo_app_order`
 --
 
@@ -357,6 +365,7 @@ CREATE TABLE `jewelry_demo_app_order` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `quantity` int NOT NULL,
   `total_price` decimal(10,2) NOT NULL,
+  `status` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` datetime(6) NOT NULL,
   `customer_id` bigint NOT NULL,
   `product_id` bigint NOT NULL,
@@ -389,7 +398,10 @@ CREATE TABLE `jewelry_demo_app_product` (
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` decimal(10,2) NOT NULL,
   `image_url` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
+  `category_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `jewelry_demo_app_pro_category_id_ebee0fde_fk_jewelry_d` (`category_id`),
+  CONSTRAINT `jewelry_demo_app_pro_category_id_ebee0fde_fk_jewelry_d` FOREIGN KEY (`category_id`) REFERENCES `jewelry_demo_app_category` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -411,4 +423,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-03-09 22:30:57
+-- Dump completed on 2025-03-10 17:55:26

@@ -6,22 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jewelry Demo - {% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="logo">Jewelry Demo</div>
-        <ul class="nav-links">
-            <li><a href="{% url 'home' %}">首頁</a></li>
-            <li><a href="{% url 'product_list' %}">產品</a></li>
-            <li><a href="{% url 'contact' %}">聯絡我們</a></li>
-            <li><a href="{% url 'login' %}">登入</a></li>
-        </ul>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'backend:home' %}">Jewelry Demo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link" href="{% url 'backend:home' %}">首頁</a>
+                    <a class="nav-link" href="{% url 'backend:product_list' %}">產品</a>
+                    <a class="nav-link" href="{% url 'backend:contact' %}">聯絡我們</a>
+                    {% if user.is_authenticated %}
+                        {% if user.level in 'designer,admin' %}
+                            <a class="nav-link" href="{% url 'backend:admin_dashboard' %}">後台管理</a>
+                            <a class="nav-link" href="{% url 'backend:manage_products' %}">管理產品</a>
+                        {% endif %}
+                        <a class="nav-link" href="{% url 'backend:logout' %}">登出</a>
+                    {% else %}
+                        <a class="nav-link" href="{% url 'backend:login' %}">登入</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </nav>
-    <div class="content">
+    <div class="container mt-4">
         {% block content %}{% endblock %}
     </div>
-    <footer>
+    <footer class="text-center mt-4 bg-dark text-white py-2">
         <p>© 2025 Jewelry Demo. 版權所有。</p>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

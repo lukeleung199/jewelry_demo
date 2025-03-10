@@ -1,0 +1,49 @@
+{% extends 'jewelry_demo_app/base.html' %}
+{% block title %}管理產品{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">管理產品</h1>
+    <form method="POST" class="mb-4">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" name="name" class="form-control" placeholder="產品名稱" required>
+            </div>
+            <div class="col-md-4">
+                <input type="number" name="price" class="form-control" step="0.01" placeholder="價格" required>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" name="add_product" class="btn btn-primary">新增產品</button>
+            </div>
+        </div>
+    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>名稱</th>
+                <th>價格</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>
+                    <form method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+                        <button type="submit" name="delete_product" class="btn btn-danger btn-sm" onclick="return confirm('確定刪除？');">刪除</button>
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">無產品數據</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
