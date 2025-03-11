@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+<body class="d-flex flex-column min-vh-100"> <!-- 添加 Flexbox 佈局 -->
+    <nav class="navbar navbar-expand-lg custom-navbar">
         <div class="container-fluid">
             <a class="navbar-brand" href="{% url 'backend:home' %}">Jewelry Demo</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,9 +21,10 @@
                     <a class="nav-link" href="{% url 'backend:product_list' %}">產品</a>
                     <a class="nav-link" href="{% url 'backend:contact' %}">聯絡我們</a>
                     {% if user.is_authenticated %}
-                        {% if user.level in 'designer,admin' %}
+                        {% if user.level in 'staff,admin,designer' %}
                             <a class="nav-link" href="{% url 'backend:admin_dashboard' %}">後台管理</a>
                             <a class="nav-link" href="{% url 'backend:manage_products' %}">管理產品</a>
+                            <a class="nav-link" href="{% url 'backend:manage_categories' %}">管理分類</a>
                         {% endif %}
                         <a class="nav-link" href="{% url 'backend:logout' %}">登出</a>
                     {% else %}
@@ -33,10 +34,10 @@
             </div>
         </div>
     </nav>
-    <div class="container mt-4">
+    <div class="container mt-5 pt-5 flex-grow-1"> <!-- 內容區填充剩餘空間 -->
         {% block content %}{% endblock %}
     </div>
-    <footer class="text-center mt-4 bg-dark text-white py-2">
+    <footer class="custom-footer text-center">
         <p>© 2025 Jewelry Demo. 版權所有。</p>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

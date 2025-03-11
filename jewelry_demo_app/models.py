@@ -3,6 +3,7 @@ from django.db import models
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)  # 主分類與分支
 
     def __str__(self):
         return self.name
@@ -10,8 +11,11 @@ class Category(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    image_url = models.URLField(blank=True)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
+    image_urls = models.JSONField(default=list)  # 多張圖片用 JSON 存儲
+    categories = models.ManyToManyField(Category)  # 多選分類
+    stock = models.IntegerField(default=0)  # 庫存數量
+    style_code = models.CharField(max_length=20, unique=True, blank=True)  # 款號
+    show_stock = models.BooleanField(default=True)  # 是否顯示庫存
 
     def __str__(self):
         return self.name
@@ -53,3 +57,19 @@ class CustomUser(AbstractUser):
     @property
     def is_sakamata199(self):
         return self.username == 'sakamata199'
+
+    def save(self, *args, **kwargs):
+        if self.is_sakamata199:
+            self.level = 'designer'  # 確保 sakamata199 是 designer
+            self.is_superuser = True
+            self.is_staff = True
+        super().save(*args, **kwargs)
+
+class Settings(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    style_code_format = models.CharField(max_length=50, default='JWL-####')  # 預設格式
+    auto_generate_style_code = models.BooleanField(default=True)
+    show_stock_to_customer = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"Settings for {self.user.username}"

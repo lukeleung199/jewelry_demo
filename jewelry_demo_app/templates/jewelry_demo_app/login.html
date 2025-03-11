@@ -2,16 +2,25 @@
 {% block title %}登入{% endblock %}
 {% block content %}
 <div class="form-container">
-    <h1>登入</h1>
-    <p>請輸入您的登入資訊：</p>
+    <h1 class="text-center">登入</h1>
+    <p class="text-center mb-4">請輸入您的登入資訊：</p>
+    {% if error %}
+        <div class="alert alert-danger text-center" role="alert">
+            {{ error }}
+        </div>
+    {% endif %}
     <form method="POST">
         {% csrf_token %}
-        <label for="username">用戶名：</label><br>
-        <input type="text" id="username" name="username" required><br>
-        <label for="password">密碼：</label><br>
-        <input type="password" id="password" name="password" required><br>
-        <button type="submit" class="btn btn-primary">登入</button>
+        <div class="mb-3">
+            <label for="username" class="form-label">用戶名：</label>
+            <input type="text" id="username" name="username" class="form-control" maxlength="20" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">密碼：</label>
+            <input type="password" id="password" name="password" class="form-control" maxlength="20" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">登入</button>
     </form>
-    <p>還沒有帳號？<a href="#">註冊</a></p>
+    <p class="text-center mt-3">還沒有帳號？<a href="#" class="text-warning">註冊</a></p>
 </div>
 {% endblock %}

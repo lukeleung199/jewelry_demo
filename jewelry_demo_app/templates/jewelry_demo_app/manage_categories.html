@@ -1,0 +1,48 @@
+{% extends 'jewelry_demo_app/base.html' %}
+{% block title %}管理分類{% endblock %}
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">管理分類</h1>
+    <form method="POST" class="mb-4">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" name="name" class="form-control" placeholder="分類名稱" required>
+            </div>
+            <div class="col-md-4">
+                <select name="parent" class="form-control">
+                    <option value="">無父分類</option>
+                    {% for category in categories %}
+                        {% if not category.parent %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary">新增分類</button>
+            </div>
+        </div>
+    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>名稱</th>
+                <th>父分類</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for category in categories %}
+            <tr>
+                <td>{{ category.name }}</td>
+                <td>{{ category.parent.name|default:"無" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">無分類數據</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

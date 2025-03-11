@@ -2,21 +2,27 @@
 {% block title %}聯絡我們{% endblock %}
 {% block content %}
 <div class="form-container">
-    <h1>聯絡我們</h1>
-    <p>歡迎聯繫我們！以下是我們的聯繫方式：</p>
-    <ul>
-        <li>電話：+852 1234 5678</li>
-        <li>電子郵件：support@jewelrydemo.com</li>
-        <li>地址：香港中環金融街1號</li>
+    <h1 class="text-center">聯絡我們</h1>
+    <p class="text-center mb-4">歡迎聯繫我們！以下是我們的聯繫方式：</p>
+    <ul class="list-unstyled">
+        <li><strong>電話：</strong> +852 1234 5678</li>
+        <li><strong>電子郵件：</strong> support@jewelrydemo.com</li>
+        <li><strong>地址：</strong> 香港中環金融街1號</li>
     </ul>
     <form>
-        <label for="name">姓名：</label><br>
-        <input type="text" id="name" name="name"><br>
-        <label for="email">電子郵件：</label><br>
-        <input type="email" id="email" name="email"><br>
-        <label for="message">訊息：</label><br>
-        <textarea id="message" name="message" rows="4"></textarea><br>
-        <button type="submit">提交</button>
+        <div class="mb-3">
+            <label for="name" class="form-label">姓名：</label>
+            <input type="text" id="name" name="name" class="form-control" maxlength="50">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">電子郵件：</label>
+            <input type="email" id="email" name="email" class="form-control" maxlength="100">
+        </div>
+        <div class="mb-3">
+            <label for="message" class="form-label">訊息：</label>
+            <textarea id="message" name="message" rows="3" class="form-control" maxlength="500"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">提交</button>
     </form>
 </div>
 {% endblock %}
