@@ -11,7 +11,7 @@
             </div>
             <div class="col-md-4">
                 <select name="parent" class="form-control">
-                    <option value="">無父分類</option>
+                    <option value="">無主分類</option>
                     {% for category in categories %}
                         {% if not category.parent %}
                             <option value="{{ category.id }}">{{ category.name }}</option>
@@ -28,7 +28,7 @@
         <thead>
             <tr>
                 <th>名稱</th>
-                <th>父分類</th>
+                <th>主分類</th>
             </tr>
         </thead>
         <tbody>

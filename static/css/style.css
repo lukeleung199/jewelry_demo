@@ -68,32 +68,7 @@ body {
     }
 }
 
-/* 首頁分類 */
-.categories {
-    background: #1a1a1a !important;
-    padding: 20px !important;
-    display: flex !important;
-    gap: 10px !important; /* 縮小間距 */
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    border-bottom: 1px solid #d4af37 !important;
-    margin-top: 80px !important;
-}
 
-.categories a {
-    color: #ffffff !important;
-    text-decoration: none !important;
-    padding: 8px 20px !important; /* 調整按鈕大小 */
-    border: 1px solid #d4af37 !important;
-    border-radius: 5px !important;
-    transition: all 0.3s ease !important;
-    font-size: 16px !important;
-}
-
-.categories a:hover {
-    background: #d4af37 !important;
-    color: #000000 !important;
-}
 
 /* 產品列表 */
 .product-list {
