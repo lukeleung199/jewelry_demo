@@ -1,0 +1,18 @@
+{% extends 'jewelry_demo_app/base_dashboard.html' %}
+{% block title %}後台管理{% endblock %}
+{% block dashboard_content %}
+    <h1>歡迎來到後台管理</h1>
+    <p>這裡是您的管理中心。</p>
+    <h2>產品概覽</h2>
+    <ul>
+        {% for product in products %}
+            <li>{{ product.name }} - HK${{ product.price }}</li>
+        {% endfor %}
+    </ul>
+    <h2>員工列表</h2>
+    <ul>
+        {% for employee in employees %}
+            <li>{{ employee.username }} ({{ employee.level }})</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

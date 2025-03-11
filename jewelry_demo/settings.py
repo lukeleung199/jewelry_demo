@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -80,3 +81,14 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 LOGIN_REDIRECT_URL = '/backend/home/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+def sanitize_filename(filename):
+    # 移除非法字符
+    return ''.join(c for c in filename if c.isalnum() or c in ['.', '-', '_']).rstrip()
+
+# 確保 media 目錄存在
+if not os.path.exists(MEDIA_ROOT):
+    os.makedirs(MEDIA_ROOT)

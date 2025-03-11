@@ -1,48 +1,248 @@
-{% extends 'jewelry_demo_app/base.html' %}
-{% block title %}管理分類{% endblock %}
-{% block content %}
-<div class="container">
-    <h1 class="mb-4">管理分類</h1>
-    <form method="POST" class="mb-4">
-        {% csrf_token %}
-        <div class="row">
+{% extends 'jewelry_demo_app/base_dashboard.html' %}
+{% block title %}分類管理{% endblock %}
+{% block dashboard_content %}
+    <div class="container">
+        <h1>分類管理</h1>
+        <div class="mb-3">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#mainCategoryModal">新增主分類</button>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#subCategoryModal">新增子分類</button>
+        </div>
+        <div class="row mb-3">
             <div class="col-md-4">
-                <input type="text" name="name" class="form-control" placeholder="分類名稱" required>
-            </div>
-            <div class="col-md-4">
-                <select name="parent" class="form-control">
-                    <option value="">無主分類</option>
-                    {% for category in categories %}
-                        {% if not category.parent %}
-                            <option value="{{ category.id }}">{{ category.name }}</option>
-                        {% endif %}
+                <label for="main_category" class="form-label">主分類：</label>
+                <select id="main_category" name="main_category" class="form-select" onchange="window.location.href='?main_category='+this.value">
+                    <option value="">選擇主分類</option>
+                    {% for category in main_categories %}
+                        <option value="{{ category.id }}" {% if selected_main == category.id|stringformat:"s" %}selected{% endif %}>{{ category.name }}</option>
                     {% endfor %}
                 </select>
             </div>
             <div class="col-md-4">
-                <button type="submit" class="btn btn-primary">新增分類</button>
+                <label for="sub_category" class="form-label">子分類：</label>
+                <select id="sub_category" name="sub_category" class="form-select" onchange="window.location.href='?sub_category='+this.value" {% if not selected_main %}disabled{% endif %}>
+                    <option value="">選擇子分類</option>
+                    {% for category in sub_categories %}
+                        <option value="{{ category.id }}" {% if selected_sub == category.id|stringformat:"s" %}selected{% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+                </select>
             </div>
         </div>
-    </form>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>名稱</th>
-                <th>主分類</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for category in categories %}
-            <tr>
-                <td>{{ category.name }}</td>
-                <td>{{ category.parent.name|default:"無" }}</td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="2">無分類數據</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>主分類</th>
+                    <th>分類</th>
+                    <th>產品數量</th>
+                    <th>庫存數量</th>
+                    <th>備註</th>
+                    <th>修改</th>
+                    <th>刪除</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if main_category_summary %}
+                    <tr>
+                        <td>{{ main_category_summary.name }}</td>
+                        <td>{{ main_category_summary.sub_category }}</td>
+                        <td>{{ main_category_summary.product_count }}</td>
+                        <td>{{ main_category_summary.stock_sum }}</td>
+                        <td>{{ main_category_summary.note }}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm edit-btn" data-category-id="{{ main_category_summary.id }}" data-bs-toggle="modal" data-bs-target="#editCategoryModal">修改</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger btn-sm delete-btn" data-category-id="{{ main_category_summary.id }}" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">刪除</button>
+                        </td>
+                    </tr>
+                {% endif %}
+                {% for data in categories %}
+                <tr>
+                    <td>{{ data.main_category }}</td>
+                    <td>{{ data.sub_category }}</td>
+                    <td>{{ data.product_count }}</td>
+                    <td>{{ data.stock_sum }}</td>
+                    <td>{{ data.note }}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm edit-btn" data-category-id="{{ data.id }}" data-bs-toggle="modal" data-bs-target="#editCategoryModal">修改</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger btn-sm delete-btn" data-category-id="{{ data.id }}" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">刪除</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- 主分類 Modal -->
+        <div class="modal fade" id="mainCategoryModal" tabindex="-1" aria-labelledby="mainCategoryModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="mainCategoryModalLabel">新增主分類</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="main_name" class="form-label">主類別名稱</label>
+                                <input type="text" class="form-control" id="main_name" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="main_note" class="form-label">備註（選填）</label>
+                                <textarea class="form-control" id="main_note" name="note"></textarea>
+                            </div>
+                            <button type="submit" name="add_main_category" class="btn btn-primary">儲存</button>
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#cancelConfirmModal">取消</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 子分類 Modal -->
+        <div class="modal fade" id="subCategoryModal" tabindex="-1" aria-labelledby="subCategoryModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="subCategoryModalLabel">新增子分類</h5>
+                        <button type="button" "btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="sub_parent" class="form-label">主分類</label>
+                                <select class="form-select" id="sub_parent" name="parent" required>
+                                    {% for category in main_categories %}
+                                        <option value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="sub_name" class="form-label">類別名稱</label>
+                                <input type="text" class="form-control" id="sub_name" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="sub_note" class="form-label">備註（選填）</label>
+                                <textarea class="form-control" id="sub_note" name="note"></textarea>
+                            </div>
+                            <button type="submit" name="add_sub_category" class="btn btn-primary">儲存</button>
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#cancelConfirmModal">取消</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 修改分類 Modal -->
+        <div class="modal fade" id="editCategoryModal" tabindex="-1" aria-labelledby="editCategoryModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editCategoryModalLabel">修改分類</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" id="edit_category_id" name="category_id">
+                            <div class="mb-3">
+                                <label for="edit_parent" class="form-label">主分類</label>
+                                <select class="form-select" id="edit_parent" name="parent">
+                                    <option value="">無</option>
+                                    {% for category in main_categories %}
+                                        <option value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit_name" class="form-label">類別名稱</label>
+                                <input type="text" class="form-control" id="edit_name" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="edit_note" class="form-label">備註（選填）</label>
+                                <textarea class="form-control" id="edit_note" name="note"></textarea>
+                            </div>
+                            <button type="submit" name="save_category" class="btn btn-primary">儲存</button>
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#cancelConfirmModal">取消</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 取消確認 Modal -->
+        <div class="modal fade" id="cancelConfirmModal" tabindex="-1" aria-labelledby="cancelConfirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cancelConfirmModalLabel">確認取消</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        確定要取消嗎？未儲存的更改將丟失！
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="window.location.href='{% url 'backend:manage_categories' %}'">確認取消</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="continueEdit">繼續編輯</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 刪除確認 Modal -->
+        <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteConfirmModalLabel">確認刪除</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        確定要刪除此分類嗎？此操作無法撤銷！
+                    </div>
+                    <div class="modal-footer">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" id="delete_category_id" name="category_id">
+                            <button type="submit" name="delete_category" class="btn btn-danger">確認刪除</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.edit-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const categoryId = this.getAttribute('data-category-id');
+                fetch(`{% url "backend:manage_categories" %}?category_id=${categoryId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const category = data.category;
+                        document.getElementById('edit_category_id').value = category.id;
+                        document.getElementById('edit_name').value = category.name;
+                        document.getElementById('edit_note').value = category.note || '';
+                        document.getElementById('edit_parent').value = category.parent || '';
+                    });
+            });
+        });
+
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const categoryId = this.getAttribute('data-category-id');
+                document.getElementById('delete_category_id').value = categoryId;
+            });
+        });
+
+        // 繼續編輯
+        document.getElementById('continueEdit').addEventListener('click', function() {
+            document.getElementById('mainCategoryModal').modal('show');
+            document.getElementById('subCategoryModal').modal('show');
+            document.getElementById('editCategoryModal').modal('show');
+        });
+    </script>
 {% endblock %}

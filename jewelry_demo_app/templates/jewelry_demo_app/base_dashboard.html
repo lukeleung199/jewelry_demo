@@ -1,0 +1,18 @@
+{% extends 'jewelry_demo_app/base.html' %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 sidebar">
+            <ul class="nav flex-column">
+                <li class="nav-item"><a href="{% url 'backend:manage_products' %}" class="nav-link">產品管理</a></li>
+                <li class="nav-item"><a href="{% url 'backend:manage_categories' %}" class="nav-link">分類管理</a></li>
+                <li class="nav-item"><a href="{% url 'backend:manage_employees' %}" class="nav-link">員工管理</a></li>
+                <li class="nav-item"><a href="{% url 'backend:manage_homepage' %}" class="nav-link">管理主頁</a></li>
+            </ul>
+        </div>
+        <div class="col-md-10">
+            {% block dashboard_content %}{% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

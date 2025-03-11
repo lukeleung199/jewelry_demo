@@ -1,0 +1,12 @@
+{% extends 'jewelry_demo_app/base_dashboard.html' %}
+{% block title %}員工管理{% endblock %}
+{% block dashboard_content %}
+    <div class="container">
+        <h1>員工管理</h1>
+        <ul>
+            {% for employee in employees %}
+                <li>{{ employee.username }} ({{ employee.level }})</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'jewelry_demo_app/base_dashboard.html' %}
+{% block title %}管理主頁{% endblock %}
+{% block dashboard_content %}
+    <div class="container">
+        <h1>管理主頁</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="title" class="form-label">標題：</label>
+                <input type="text" id="title" name="title" class="form-control" value="{{ featured.title|default:'' }}">
+            </div>
+            <div class="mb-3">
+                <label for="main_image" class="form-label">主圖片 URL：</label>
+                <input type="url" id="main_image" name="main_image" class="form-control" value="{{ featured.main_image|default:'' }}">
+            </div>
+            <button type="submit" name="main_image" class="btn btn-primary">更新主圖片</button>
+        </form>
+        <h2>精選產品</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <ul>
+                {% for product in products %}
+                    <li>
+                        <input type="checkbox" name="product_id" value="{{ product.id }}" {% if product in featured.featured_products.all %}checked{% endif %}>
+                        {{ product.name }} (HK${{ product.price }})
+                        <button type="submit" name="add_product" value="{{ product.id }}" class="btn btn-success btn-sm">添加</button>
+                        <button type="submit" name="remove_product" value="{{ product.id }}" class="btn btn-danger btn-sm">移除</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        </form>
+    </div>
+{% endblock %}

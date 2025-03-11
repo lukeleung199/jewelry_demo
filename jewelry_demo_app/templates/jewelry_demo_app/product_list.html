@@ -4,9 +4,11 @@
 <div class="container">
     <h1 class="mb-4">我們的產品</h1>
     <div class="categories">
-        <a href="{% url 'backend:product_list' %}?category=戒指" class="btn btn-outline-light">戒指</a>
-        <a href="{% url 'backend:product_list' %}?category=項鍊" class="btn btn-outline-light">項鍊</a>
-        <a href="{% url 'backend:product_list' %}?category=耳環" class="btn btn-outline-light">耳環</a>
+        {% for category in categories %}
+            <a href="{% url 'backend:product_list' %}?category={{ category.name }}" class="btn btn-outline-light">{{ category.name }}</a>
+        {% empty %}
+            <p>暫無分類</p>
+        {% endfor %}
     </div>
     <div class="product-list">
         {% for product in products %}
